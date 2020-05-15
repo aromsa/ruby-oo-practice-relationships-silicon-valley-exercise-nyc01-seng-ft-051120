@@ -1,7 +1,7 @@
 class Startup
 
   attr_accessor :name
-  attr_reader :founder, :name, :domain
+  attr_reader :founder, :domain
 
   @@all = []
 
@@ -9,9 +9,10 @@ class Startup
     @name = name
     @founder = founder
     @domain = domain
+    Startup.all << self
   end
 
-  def pivot=(domain, name)
+  def pivot(domain, name)
     @domain = domain
     @name = name
   end
@@ -24,24 +25,41 @@ class Startup
     self.all.find do |startup|
       startup.founder == founder_name
   end
+end
+def self.domains
+  Startup.all.map do |v|
+    v.domain
+    end.uniq
+ end
+
+ def sign_contract(venture_capitalist,type,investment)
+  FundingRound.new(self,venture_capitalist,type,investment)
+ end
+
+ def num_funding_rounds
+  FundingRound.all.select do |v|
+    v.startup == self
+  end
+ end
+
+ def total_funds
+  num_funding_rounds.map do |v|
+    v.investment
+ end
+end
   
 end
 
-
-# `Startup#name`
-#   - returns a **string** that is the startup's name
-# - `Startup#founder`
-#   - returns a **string** that is the founder's name
-#   - Once a startup is created, the founder cannot be changed.
-# - `Startup#domain`
-#   - returns a **string** that is the startup's domain
-# - `Startup#pivot`
-#   - given a string of a **domain** and a string of a **name**, change the domain
-#     and name of the startup. This is the only public method through which the
-#     domain should be changed.
-# - `Startup.all`
-#   - should return **all** of the startup instances
-# - `Startup.find_by_founder`
-#   - given a string of a **founder's name**, returns the **first startup** whose founder's name matches
-# - `Startup.domains`
-#   - should return an **array** of all of the different startup domains
+# `Startup#sign_contract`X
+#   - given a **venture capitalist object**, type of investment
+#  (as a string), and the amount invested (as a float), creates a new funding round and associates it with that startup and venture capitalist.
+# - `Startup#num_funding_rounds`
+#   - Returns the total number of funding rounds that the startup has gotten
+# - `Startup#total_funds`
+#   - Returns the total sum of investments that the startup has gotten
+# - `Startup#investors`
+  # - Returns a **unique** array of all the venture capitalists that
+  #  have invested in this company
+# - `Startup#big_investors`
+#   - Returns a **unique** array of all the venture capitalists that have 
+# invested in this company and are in the Trés Commas club
