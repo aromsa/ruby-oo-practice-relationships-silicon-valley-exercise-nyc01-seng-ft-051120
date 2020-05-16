@@ -14,17 +14,53 @@ class VentureCapitalist
 
     def self.tres_commas_club
         VentureCapitalist.all.select do |v|
-            v.total_worth > 1000000
+            v.total_worth > 1000000000
+        end
+    end
+
+    def offer_contract(startup,type,investment)
+        FundingRound.new(startup,self,type,investment)
+    end
+
+    def funding_rounds
+        FundingRound.all.select do |v|
+            v.venture_capitalist == self
+        end
+    end
+
+    def portfolio
+        funding_rounds.map do |v|
+            v.startup
+        end.uniq
+    end
+
+    # def biggest_investment
+    #     funding_rounds.map do |v|
+    #         v.
+    #     end
+    # end
+
+    def invested(domain)
+        funding_rounds.map do|v|
+            v.investment
         end
     end
 
 end
 
-# - `VentureCapitalist#name`
-#   - returns a **string** that is the venture capitalist's name
-# - `VentureCapitalist#total_worth`
-#   - returns a **number** that is the total worth of this investor (e.g., think of it as how much money they have)
-# - `VentureCapitalist.all`
-#   - returns an array of all venture capitalists
-# - `VentureCapitalist.tres_commas_club` XXXXXXX
-#   - returns an array of all venture capitalists in the Trés Commas club (they have more then 1,000,000,000 `total_worth`)
+# `VentureCapitalist#offer_contract`X
+#   - given a **startup object**, type of investment (as a string),
+#    and the amount invested (as a float), creates a new funding round and 
+#    associates it with that startup and venture capitalist.
+
+# - `VentureCapitalist#funding_rounds`X
+#   - returns an array of all funding rounds for that venture capitalist
+
+# - `VentureCapitalist#portfolio`X
+#   - Returns a **unique** list of all startups this venture capitalist has funded
+
+# - `VentureCapitalist#biggest_investment`
+#   - returns the largest funding round given by this venture capitalist
+
+# - `VentureCapitalist#invested`X
+#   - given a **domain string**, returns the total amount invested in that domain

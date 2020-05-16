@@ -12,11 +12,12 @@ name3 = Startup.new("apple","sam","apple.com")
 
 vc1 = VentureCapitalist.new("FUND",1000)
 vc2 = VentureCapitalist.new("VC",4000)
-vc3 = VentureCapitalist.new("Bank",400000000)
+vc3 = VentureCapitalist.new("Bank",4000000000)
 
 round1 = FundingRound.new(name1,vc2,"series a",50.32)
 round2 = FundingRound.new(name2,vc1,"series b",500.54)
 round3 = FundingRound.new(name3,vc3,"series e",500.27)
+round4 = FundingRound.new(name1,vc3,"series z",5000000)
 
 
 

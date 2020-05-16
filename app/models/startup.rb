@@ -43,9 +43,22 @@ def self.domains
  end
 
  def total_funds
-  num_funding_rounds.map do |v|
+  a = num_funding_rounds.each do |v|
     v.investment
  end
+ a.inject(0, :+)
+end
+
+def investors
+  num_funding_rounds.map do |v|
+    v.venture_capitalist
+  end.uniq
+end
+
+def big_investors
+  investors.select do |v|
+    v.total_worth > 1000000000
+end
 end
   
 end
@@ -55,11 +68,11 @@ end
 #  (as a string), and the amount invested (as a float), creates a new funding round and associates it with that startup and venture capitalist.
 # - `Startup#num_funding_rounds`
 #   - Returns the total number of funding rounds that the startup has gotten
-# - `Startup#total_funds`
+# - `Startup#total_funds`XXXXx
 #   - Returns the total sum of investments that the startup has gotten
-# - `Startup#investors`
+# - `Startup#investors`XXXXX
   # - Returns a **unique** array of all the venture capitalists that
   #  have invested in this company
 # - `Startup#big_investors`
 #   - Returns a **unique** array of all the venture capitalists that have 
-# invested in this company and are in the Trés Commas club
+# invested in this company and are in the Trés Commas clubXXXXXXX
