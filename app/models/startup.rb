@@ -24,55 +24,65 @@ class Startup
   def self.find_by_founder(founder_name)
     self.all.find do |startup|
       startup.founder == founder_name
+    end
   end
-end
-def self.domains
-  Startup.all.map do |v|
-    v.domain
+  
+  def self.domains
+    Startup.all.map do |v|
+      v.domain
     end.uniq
- end
-
- def sign_contract(venture_capitalist,type,investment)
-  FundingRound.new(self,venture_capitalist,type,investment)
- end
-
- def num_funding_rounds
-  FundingRound.all.select do |v|
-    v.startup == self
   end
- end
 
- def total_funds
-  a = num_funding_rounds.each do |v|
-    v.investment
- end
- a.inject(0, :+)
-end
+  def sign_contract(venture_capitalist,type,investment)
+    FundingRound.new(self,venture_capitalist,type,investment)
+  end
 
-def investors
-  num_funding_rounds.map do |v|
-    v.venture_capitalist
-  end.uniq
-end
+  def funding_rounds
+    FundingRound.all.select do |fr|
+      fr.startup == self
+    end
+  end
 
-def big_investors
-  investors.select do |v|
-    v.total_worth > 1000000000
-end
-end
+  def num_funding_rounds
+    funding_rounds.count
+  end
+
+  def total_funds
+    a = funding_rounds.map do |v|
+      v.investment
+    end
+    a.sum
+  end
+
+  def investors
+    funding_rounds.map do |v|
+      v.venture_capitalist.name
+    end.uniq
+  end
+
+  def big_investors
+    #not working yet
+    funding_rounds.select do |fr|
+      fr.investment > 1000000000
+    end
+  end
   
 end
 
-# `Startup#sign_contract`X
-#   - given a **venture capitalist object**, type of investment
-#  (as a string), and the amount invested (as a float), creates a new funding round and associates it with that startup and venture capitalist.
-# - `Startup#num_funding_rounds`
-#   - Returns the total number of funding rounds that the startup has gotten
-# - `Startup#total_funds`XXXXx
-#   - Returns the total sum of investments that the startup has gotten
-# - `Startup#investors`XXXXX
-  # - Returns a **unique** array of all the venture capitalists that
-  #  have invested in this company
+# DONE `Startup#sign_contract`X
+#     - given a **venture capitalist object**, type of investment
+#       (as a string), and the amount invested (as a float), creates a new funding round and associates it with that startup and venture capitalist.
+# 
+# DONE - `Startup#num_funding_rounds` X
+#      - Returns the total number of funding rounds that the startup has gotten
+
+# DONE - `Startup#total_funds`X
+#       - Returns the total sum of investments that the startup has gotten
+# 
+# DONE - `Startup#investors`X
+#       - Returns a **unique** array of all the venture capitalists that
+#         have invested in this company
+
 # - `Startup#big_investors`
 #   - Returns a **unique** array of all the venture capitalists that have 
 # invested in this company and are in the Trés Commas clubXXXXXXX

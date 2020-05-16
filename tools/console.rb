@@ -17,7 +17,11 @@ vc3 = VentureCapitalist.new("Bank",4000000000)
 round1 = FundingRound.new(name1,vc2,"series a",50.32)
 round2 = FundingRound.new(name2,vc1,"series b",500.54)
 round3 = FundingRound.new(name3,vc3,"series e",500.27)
-round4 = FundingRound.new(name1,vc3,"series z",5000000)
+round4 = FundingRound.new(name1,vc2,"series z",5000000000)
+round5 = FundingRound.new(name1,vc1,"series c",2000000000)
+round6 = FundingRound.new(name1,vc1,"series c",4000000000)
+
+
 
 
 
